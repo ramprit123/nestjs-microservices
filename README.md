@@ -178,6 +178,49 @@ docker-compose -f docker-compose.dev.yml up -d --build
 docker-compose -f docker-compose.dev.yml down
 ```
 
+## Docker Development Setup
+
+### Hot Reload Development
+
+For development with hot reload, use the development Docker Compose file:
+
+```bash
+# Start development environment with hot reload
+docker-compose -f docker-compose.dev.yml up --build
+
+# Or run in detached mode
+docker-compose -f docker-compose.dev.yml up -d --build
+```
+
+This setup provides:
+
+- **Hot reload**: Changes to source code are automatically reflected
+- **Volume mounting**: Source code is mounted from host to container
+- **Development dependencies**: All dev dependencies are installed
+- **Debug mode**: Ready for debugging with `--inspect`
+
+### Production Build
+
+For production deployment:
+
+```bash
+# Build and run production containers
+docker-compose up --build
+```
+
+### Docker Commands
+
+```bash
+# View logs
+docker-compose -f docker-compose.dev.yml logs -f sleeper-api
+
+# Stop services
+docker-compose -f docker-compose.dev.yml down
+
+# Rebuild containers
+docker-compose -f docker-compose.dev.yml up --build --force-recreate
+```
+
 ### Available Services
 
 - **sleeper-api**: Your NestJS microservice (port 4000)
@@ -192,4 +235,8 @@ PORT=4000
 NODE_ENV=development
 DEBUG=sleeper-api:*
 MONGODB_URI=mongodb+srv://rampritfreelancer:hSHSxVNesprA0Ro9@cluster0.ofa493n.mongodb.net/reservation
+```
+
+```
+docker-compose -f docker-compose.dev.yml up --build
 ```

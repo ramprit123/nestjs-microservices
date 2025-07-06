@@ -4,19 +4,23 @@ FROM node:18-alpine AS development
 WORKDIR /usr/src/app
 
 # Copy package files and install dependencies
-COPY pnpm-lock.yaml ./
 COPY package.json ./
+COPY pnpm-lock.yaml ./
 
 # Install pnpm
 RUN npm install -g pnpm
 
+# Install all dependencies (including devDependencies for development)
 RUN pnpm install
 
 # Copy the rest of the application code
 COPY . .
 
-# Build the NestJS app
-RUN pnpm run build
+# Expose the port
+EXPOSE 4000
+
+# Development command with hot reload
+CMD ["pnpm", "run", "start:dev", "sleeper-api"]
 
 # Production image
 FROM node:18-alpine AS production
@@ -30,9 +34,15 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY pnpm-lock.yaml ./
 
-# Install only production dependencies
+# Install pnpm and only production dependencies
 RUN npm install -g pnpm && \
     pnpm install --prod
-COPY --from=development /usr/src/app/dist ./dist
+
+# Copy source code and build
+COPY . .
+RUN pnpm run build
+
+# Expose the port
+EXPOSE 4000
 
 CMD ["node", "dist/apps/sleeper-api/main.js"]
