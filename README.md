@@ -75,3 +75,67 @@ src/
 ## License
 
 MIT
+
+```
+# Run in development mode with hot reload
+pnpm run start:dev sleeper-api
+
+# Run in debug mode
+pnpm run start:debug sleeper-api
+
+# Run in production mode
+pnpm run start:prod sleeper-api
+
+# Run with environment variables
+docker run -p 4000:4000 -e MONGODB_URI="your-mongodb-connection-string" sleeper-api
+
+# Run in detached mode (background)
+docker run -d -p 4000:4000 -e MONGODB_URI="your-mongodb-connection-string" sleeper-api
+
+# Run with volume mounting for development
+docker run -p 4000:4000 -v $(pwd):/usr/src/app -e MONGODB_URI="your-mongodb-connection-string" sleeper-api
+```
+
+## Docker Commands
+
+### Build the Docker image:
+
+```bash
+docker build -f apps/sleeper-api/Dockerfile -t sleeper-api .
+```
+
+### Run the Docker container:
+
+**Option 1: With environment file (Recommended)**
+
+```bash
+docker run -p 4000:4000 --env-file apps/sleeper-api/.env sleeper-api
+```
+
+**Option 2: With inline environment variables**
+
+```bash
+docker run -p 4000:4000 -e MONGODB_URI="mongodb+srv://rampritfreelancer:hSHSxVNesprA0Ro9@cluster0.ofa493n.mongodb.net/reservation" sleeper-api
+```
+
+**Option 3: Run in detached mode (background)**
+
+```bash
+docker run -d -p 4000:4000 --env-file apps/sleeper-api/.env sleeper-api
+```
+
+### Verify the API is running:
+
+```bash
+curl http://localhost:4000
+```
+
+**Note**: The API will return a 404 for the root path `/` - this is expected. Use the specific API endpoints for your service.
+
+```
+docker build -f apps/sleeper-api/Dockerfile -t sleeper-api .
+docker run -p 4000:4000 --env-file apps/sleeper-api/.env sleeper-api
+docker run -p 4000:4000 -e MONGODB_URI="mongodb+srv://rampritfreelancer:hSHSxVNesprA0Ro9@cluster0.ofa493n.mongodb.net/reservation" sleeper-api
+
+docker run -d -p 4000:4000 --env-file apps/sleeper-api/.env sleeper-api
+```
