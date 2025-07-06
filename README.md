@@ -132,10 +132,64 @@ curl http://localhost:4000
 
 **Note**: The API will return a 404 for the root path `/` - this is expected. Use the specific API endpoints for your service.
 
-```
-docker build -f apps/sleeper-api/Dockerfile -t sleeper-api .
-docker run -p 4000:4000 --env-file apps/sleeper-api/.env sleeper-api
-docker run -p 4000:4000 -e MONGODB_URI="mongodb+srv://rampritfreelancer:hSHSxVNesprA0Ro9@cluster0.ofa493n.mongodb.net/reservation" sleeper-api
+## Docker Compose
 
-docker run -d -p 4000:4000 --env-file apps/sleeper-api/.env sleeper-api
+Docker Compose provides an easier way to manage your application and its dependencies.
+
+### Production Environment
+
+**Build and start the services:**
+
+```bash
+docker-compose up --build
+```
+
+**Run in detached mode (background):**
+
+```bash
+docker-compose up -d --build
+```
+
+**Stop the services:**
+
+```bash
+docker-compose down
+```
+
+### Development Environment
+
+For development with hot reload and local MongoDB:
+
+**Start development services:**
+
+```bash
+docker-compose -f docker-compose.dev.yml up --build
+```
+
+**Run in detached mode:**
+
+```bash
+docker-compose -f docker-compose.dev.yml up -d --build
+```
+
+**Stop development services:**
+
+```bash
+docker-compose -f docker-compose.dev.yml down
+```
+
+### Available Services
+
+- **sleeper-api**: Your NestJS microservice (port 4000)
+- **mongodb**: MongoDB database (port 27017, only in dev mode)
+
+### Environment Variables
+
+Make sure your `apps/sleeper-api/.env` file contains:
+
+```env
+PORT=4000
+NODE_ENV=development
+DEBUG=sleeper-api:*
+MONGODB_URI=mongodb+srv://rampritfreelancer:hSHSxVNesprA0Ro9@cluster0.ofa493n.mongodb.net/reservation
 ```
