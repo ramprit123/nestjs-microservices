@@ -17,6 +17,29 @@ services:
     restart: unless-stopped
     depends_on:
       - mongodb
+  auth:
+    build:
+      context: .
+      dockerfile: apps/auth/Dockerfile
+      target: production
+    ports:
+      - "4001:4001"
+    environment:
+      - NODE_ENV=production
+      - PORT=4001
+      - MONGODB_URI=mongodb://admin:password@mongodb:27017/reservation?authSource=admin
+    env_file:
+      - .env
+    volumes:
+      # Mount source code for hot reload
+      - .:/usr/src/app
+      # Use named volume for node_modules to avoid conflicts
+      - /usr/src/app/node_modules
+    networks:
+      - microservices-network
+    restart: unless-stopped
+    depends_on:
+      - mongodb
 
   mongodb:
     image: mongo:7.0
