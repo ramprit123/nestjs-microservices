@@ -1,2 +1,4 @@
 export * from './database/database.module';
+export * from './database/abstract.repository';
+export * from './database/abstract.document';
 export * from './config/config.module';
