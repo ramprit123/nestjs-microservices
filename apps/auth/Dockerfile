@@ -34,13 +34,16 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY pnpm-lock.yaml ./
 
-# Install pnpm and only production dependencies
+# Install pnpm and all dependencies (needed for build)
 RUN npm install -g pnpm && \
-    pnpm install --prod
+    pnpm install
 
 # Copy source code and build
 COPY . .
 RUN pnpm run build
+
+# Remove devDependencies after build
+RUN pnpm prune --prod
 
 # Expose the port
 EXPOSE 4001

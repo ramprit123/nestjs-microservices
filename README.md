@@ -239,4 +239,13 @@ MONGODB_URI=mongodb+srv://rampritfreelancer:hSHSxVNesprA0Ro9@cluster0.ofa493n.mo
 
 ```
 docker-compose -f docker-compose.dev.yml up --build
+
+docker-compose down
+
+docker-compose build --no-cache
+
+
+lsof -i :4001
+
+
 ```
