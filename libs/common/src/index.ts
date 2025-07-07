@@ -2,3 +2,8 @@ export * from './database/database.module';
 export * from './database/abstract.repository';
 export * from './database/abstract.document';
 export * from './config/config.module';
+export * from './guards/auth.guard';
+export * from './guards/roles.guard';
+export * from './guards/auth.decorators';
+export * from './guards/current-user.decorator';
+export * from './guards/auth.module';
