@@ -12,16 +12,12 @@ services:
       - MONGODB_URI=mongodb://admin:password@mongodb:27017/reservation?authSource=admin
     env_file:
       - .env
-    volumes:
-      # Mount source code for hot reload
-      - .:/usr/src/app
-      # Use named volume for node_modules to avoid conflicts
-      - /usr/src/app/node_modules
     networks:
       - microservices-network
     restart: unless-stopped
     depends_on:
       - mongodb
+
   auth:
     build:
       context: .
@@ -35,11 +31,6 @@ services:
       - MONGODB_URI=mongodb://admin:password@mongodb:27017/reservation?authSource=admin
     env_file:
       - .env
-    volumes:
-      # Mount source code for hot reload
-      - .:/usr/src/app
-      # Use named volume for node_modules to avoid conflicts
-      - /usr/src/app/node_modules
     networks:
       - microservices-network
     restart: unless-stopped

@@ -13,7 +13,7 @@ async function bootstrap() {
       port: parseInt(process.env.PORT || '4001', 10),
     },
   });
-  await app.listen(process.env.PORT ?? 4001);
+  await app.listen(process.env.PORT ?? 4001, '0.0.0.0');
   await app.startAllMicroservices();
   console.log(`Auth service is running on port ${process.env.PORT ?? 4001}`);
 }
